@@ -1,5 +1,108 @@
 # -*- mode: org; -*
-* TODO [[http://srfi.schemers.org/srfi-69/srfi-69.html][srfi-69]]-based functions
+* TODO issues
+  riastradh's claim about alist-backed hash-tables: we'd rather have
+  transparency in certain circumstances; orthogonal to the
+  alist-backed hash-table question (employed by scheme48, i believe he
+  said).
+* DONE =alist-ref{,/default}=
+  CLOSED: [2010-01-25 Mon 07:02]
+  - CLOSING NOTE [2010-01-25 Mon 07:02] \\
+    reasonable first pass
+  srfi-1, srfi-16 and srfi-23 semantics
+
+  #+BEGIN_SRC org
+    ,- alist-ref 
+    ,  - case-lambda
+    ,    - alist key
+    ,      - alist-ref alist key lambda error "key not found" key
+    ,    - alist key thunk
+    ,      - alist-ref alist key thunk eqv?
+    ,    - alist key thunk =
+    ,      - let
+    ,        - value assoc key alist =
+    ,          - or value (thunk)
+  #+END_SRC
+
+  how does alist-ref currently behave w.r.t. to unfound keys?
+
+  #+BEGIN_SRC scheme
+    (use test)
+    (test
+     "alist-ref on non-extant key"
+     #f
+     (alist-ref 'harro '((1 . 2))))
+  #+END_SRC
+
+  ah, returns #f; also, our parameter-order is incongruous with
+  existing alist-ref and assoc; resembles srfi-69's ref.
+
+  #+BEGIN_SRC scheme
+    (use test)
+    
+    (define alist-ref
+      (case-lambda
+       ((alist key)
+        (alist-ref alist key (lambda () (error "Key does not exist" key))))
+       ((alist key thunk)
+        (alist-ref alist key thunk eqv?))
+       ((alist key thunk =)
+        (let ((value (assoc key alist =)))
+          (or (and value (cdr value))
+              (thunk))))))
+    
+    (define alist-ref/default
+      (case-lambda
+       ((alist key default)
+        (alist-ref alist key (lambda () default)))
+       ((alist key default =)
+        (alist-ref alist key (lambda () default) =))))
+    
+    (let ((alist '((1 . 2))))
+      (test
+       "alist-ref: extant key"
+       2
+       (alist-ref alist 1))
+      (test-error
+       "alist-ref: non-extant key, no default"
+       (alist-ref alist 2))
+      (test
+       "alist-ref: non-extant key, thunk"
+       3
+       (alist-ref alist 2 (lambda () 3)))
+      (test
+       "alist-ref: =, thunk"
+       3
+       (alist-ref alist 1 (lambda () 3) (complement eqv?)))
+      (test
+       "alist-ref/default"
+       2
+       (alist-ref/default alist 1 3))
+      (test
+       "alist-ref/default: non-extant key"
+       3
+       (alist-ref/default alist 2 3))
+      (test
+       "alist-ref/default: default, ="
+       3
+       (alist-ref/default alist 1 3 (complement eqv?))))
+  #+END_SRC
+** leppie's rewrite
+   http://paste.lisp.org/display/91332
+* DONE scope
+  CLOSED: [2010-01-25 Mon 07:02]
+  - CLOSING NOTE [2010-01-25 Mon 07:02] \\
+    defined
+  really, i just want to standardize =alist-ref=; other interesting
+  things: =alist-ref/default=, =alist-set!=, =alist-update!=,
+  =alist-exists?=, =alist-update!{,default}=, =alist-keys=,
+  =alist-values=, =alist-for-each= (dyadic), =alist-map=, =alist-fold=
+  (dyadic), =alist-unfold= (maybe), =make-alist= (maybe),
+  =tabulate-alist= (maybe), =alist-merge= (what would this do
+  differently from =lset-union=? fuck it), etc.
+* DONE [[http://srfi.schemers.org/srfi-69/srfi-69.html][srfi-69]]-based functions
+  CLOSED: [2010-01-25 Mon 07:02]
+  - CLOSING NOTE [2010-01-25 Mon 07:02] \\
+    defining our scope
   - =alist?=
   - =alist-ref=
   - =alist-ref/default=
@@ -31,7 +134,10 @@
   - =alist-merge!=
 
     something along the lines of [[http://srfi.schemers.org/srfi-1/srfi-1.html#lset-union][=lset-union=]]?
-* TODO [[http://srfi.schemers.org/srfi-43/srfi-43.html][srfi-43]]-based functions
+* DONE [[http://srfi.schemers.org/srfi-43/srfi-43.html][srfi-43]]-based functions
+  CLOSED: [2010-01-25 Mon 07:02]
+  - CLOSING NOTE [2010-01-25 Mon 07:02] \\
+    stick to srfi-69
   - =make-alist=
   - =alist-unfold=
   - =alist-unfold-right=
@@ -93,7 +199,10 @@
   - =alist-reverse-copy!=
 
     not in srfi-1, for instance; relevant?
-* TODO [[http://srfi.schemers.org/srfi-1/srfi-1.html#Miscellaneous][srfi-1]]-like functions
+* DONE [[http://srfi.schemers.org/srfi-1/srfi-1.html#Miscellaneous][srfi-1]]-like functions
+  CLOSED: [2010-01-25 Mon 07:01]
+  - CLOSING NOTE [2010-01-25 Mon 07:02] \\
+    stick to srfi-69
   - =alist-append=
 
     this is just append
