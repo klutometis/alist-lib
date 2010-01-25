@@ -1,0 +1,112 @@
+# -*- mode: org; -*
+* TODO [[http://srfi.schemers.org/srfi-69/srfi-69.html][srfi-69]]-based functions
+  - =alist?=
+  - =alist-ref=
+  - =alist-ref/default=
+  - =alist-set!=
+  - =alist-delete!=
+  - =alist-exists?=
+  - =alist-update!=
+  - =alist-update!/default=
+  - =alist-size=
+  - =alist-keys=
+  - =alist-values=
+  - =alist-walk=
+    #+BEGIN_QUOTE
+    Note: in some implementations, there is a procedure called
+    =hash-table-map= which does the same as this procedure. However,
+    in other implementations, =hash-table-map= does something else. In
+    no implementation that I know of, =hash-table-map= does a real
+    functorial map that lifts an ordinary function to the domain of
+    hash tables. Because of these reasons, =hash-table-map= is left
+    outside this SRFI.
+    #+END_QUOTE
+
+    why not =alist-for-each= and =alist-map=? maybe we should consult
+    [[http://srfi.schemers.org/srfi-43/srfi-43.html][vector-lib]], too.
+  - =alist-fold=
+  - =alist-copy=
+
+    do we really need this? aren't there [[http://srfi.schemers.org/srfi-1/srfi-1.html#list-copy][=list-copy=]] mechanisms from srfi-1?
+  - =alist-merge!=
+
+    something along the lines of [[http://srfi.schemers.org/srfi-1/srfi-1.html#lset-union][=lset-union=]]?
+* TODO [[http://srfi.schemers.org/srfi-43/srfi-43.html][srfi-43]]-based functions
+  - =make-alist=
+  - =alist-unfold=
+  - =alist-unfold-right=
+  - =alist-copy=
+
+    just synonimize whatever srfi-1 equivalent
+  - =alist-reverse-copy=
+  - =alist-append=
+  - =alist-concatenate=
+
+    these things have srfi-1 equivalents
+  - =alist?=
+
+    should we divine list of lists?
+  - =alist-empty?=
+
+    =null?=
+  - =alist==
+
+    =equal?=
+  - =alist-ref=
+  - =alist-length=
+
+    length
+  - =alist-fold=
+  - =alist-fold-right=
+  - =alist-map=
+  - =alist-map!=
+  - =alist-for-each=
+  - =alist-count=
+  - =alist-index=
+  - =alist-index-right=
+  - =alist-skip=
+  - =alist-skip-right=
+  - =alist-binary-search=
+  - =alist-any=
+
+    could be a dyad?
+  - =alist-every=
+
+    v. supra: dyad?
+  - =alist-set!=
+
+    srfi-69 semantics are superior
+  - =alist-swap!=
+
+    relevant? not in srfi-1, for instance.
+  - =alist-fill!=
+
+    relevant? =make-list=, etc. look to srfi-1 for an =alist-tabulate=?
+  - =alist-reverse!=
+
+    srfi-1
+  - =alist-copy!=
+
+    interestingly, srfi-1 already has an [[http://srfi.schemers.org/srfi-1/srfi-1.html#alist-copy][=alist-copy=]]; in addition to
+    =alist-cons=, =alist-delete=, =alist-delete!=. would be nice if we
+    could restrict the scope to hash-table-like things.
+  - =alist-reverse-copy!=
+
+    not in srfi-1, for instance; relevant?
+* TODO [[http://srfi.schemers.org/srfi-1/srfi-1.html#Miscellaneous][srfi-1]]-like functions
+  - =alist-append=
+
+    this is just append
+  - =alist-zip=
+
+    this is just zip? what about dyadism?
+  - =alist-count=
+
+    fuck it; let's limit the scope to srfi-69-like things. although,
+    =append-maps= and =filter-maps= are cool.
+  - =alist-remove=
+
+    we already have =alist-delete=.
+  - =alist-{every,any}=
+
+    we already have =every=, =any=.
