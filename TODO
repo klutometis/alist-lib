@@ -4,6 +4,58 @@
   transparency in certain circumstances; orthogonal to the
   alist-backed hash-table question (employed by scheme48, i believe he
   said).
+* TODO =alist-set!=
+  maybe the semantics of =alist-set!= can be equivalent to
+  =set-car!= + =alist-cons=; leave updating to =alist-update!=? on the
+  other hand, =vector-set!= semantics. hmm; let's follow srfi-69:
+  =alist-set!= would indeed do a (possibly) destructive value update
+  on a specific key irregardless of its previous value; it's like a
+  blind =alist-update!=. relevant?
+
+  in other words, =alist-set!= seems like a special case of
+  =alist-update!=; or is it the other way around?
+
+  #+BEGIN_SRC org
+    ,- alist-set!
+    ,  - case-lambda
+    ,    - alist key value
+    ,      - alist-set! alist key value eqv?
+    ,    - alist key value =
+    ,      - let
+    ,        - pair assoc key alist =
+    ,          - if value
+    ,            - set-cdr! pair
+    ,            - 
+  #+END_SRC
+  
+  shit, how to deal with repeated keys here; we're not doing a
+  hash-table, so theoretically repeated keys should be allowed. hmm;
+  seems like we need a unique key policy.
+
+  if we don't enforce unique keys, why not just =alist-cons= +
+  =set-car!= (or whatever)? otherwise, if we do enforce unique keys
+  (why?); =alist-delete!= will delete all such keys.
+
+  why not have =alist-set!= set the first applicable key? that way, we
+  can do a =set-cdr!=, etc.
+
+  how does =set-car!= behave an on alist?
+
+  #+BEGIN_SRC scheme
+    (define (alist-prepend! alist key value)
+      (let ((car (car alist)))
+        (set-cdr! alist alist)
+        (set-car! alist (cons key value))))
+    
+    (let ((alist '((1 . 2) (3 . 4))))
+      (alist-prepend! alist 5 6)
+      alist)
+    
+    #;
+    (let ((alist '()))
+      (alist-prepend! alist 5 6)
+      alist)
+  #+END_SRC
 * DONE =alist-ref{,/default}=
   CLOSED: [2010-01-25 Mon 07:02]
   - CLOSING NOTE [2010-01-25 Mon 07:02] \\
