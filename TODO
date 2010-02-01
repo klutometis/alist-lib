@@ -4,7 +4,12 @@
   transparency in certain circumstances; orthogonal to the
   alist-backed hash-table question (employed by scheme48, i believe he
   said).
-* TODO =alist-set!=
+* TODO =alist-update!=
+* DONE =alist-set!=
+  CLOSED: [2010-02-01 Mon 08:25]
+  - CLOSING NOTE [2010-02-01 Mon 08:26] \\
+    can we call this done? with the =alist-set!= \rightarrow
+    =alist-prepend!= semantics; and as long as =list-copy= is acceptable, yes.
   maybe the semantics of =alist-set!= can be equivalent to
   =set-car!= + =alist-cons=; leave updating to =alist-update!=? on the
   other hand, =vector-set!= semantics. hmm; let's follow srfi-69:
