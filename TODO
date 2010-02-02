@@ -4,7 +4,64 @@
   transparency in certain circumstances; orthogonal to the
   alist-backed hash-table question (employed by scheme48, i believe he
   said).
+* TODO non-destructive versions of the below
+* TODO =alist-delete-duplicates=, =alist-delete-duplicates!=
+  key-based
+* TODO =alist-delete=
+* TODO =alist-delete!=
+* TODO =alist-update=
+* TODO =alist-set=
+  just =alist-cons=
+* TODO =alist-set!= $\rightarrow$ =alist-cons!=?
+* CANCELED =alist-copy=
+  CLOSED: [2010-02-02 Tue 06:23]
+  just =list-copy=
+* CANCELED =alist-size=
+  CLOSED: [2010-02-02 Tue 06:23]
+  just =length=
+* TODO =alist-values=
+  trivial map
+  #+BEGIN_SRC scheme
+    (define (alist-values alist)
+      (map cdr alist))
+  #+END_SRC
+* TODO =alist-keys=
+  trivial map
+  #+BEGIN_SRC scheme
+    (define (alist-keys alist)
+      (map car alist))
+  #+END_SRC
+* TODO =alist-map=
+  with =(lambda (key value) ...)= semantics
+  #+BEGIN_SRC scheme
+    (use srfi-1 test debug)
+    
+    (define (alist-values alist)
+      (map cdr alist))
+    
+    (define (alist-keys alist)
+      (map car alist))
+    
+    (define (alist-map f . alists)
+      (apply map (cons (lambda key-values (f (alist-keys key-values)
+                                             (alist-values key-values)))
+                       alists)))
+    
+    
+    (test
+     "alist-map with three alists"
+     '(((a e i) (b f j)) ((c g k) (d h l)))
+     (alist-map (lambda (keys data) (list keys data))
+                '((a . b) (c . d))
+                '((e . f) (g . h))
+                '((i . j) (k . l))))
+  #+END_SRC
+* TODO =alist-fold=
+  with =(lambda (key value) ...)= semantics
+* TODO =alist-for-each=
+  with =(lambda (key value) ...)= semantics
 * DONE =alist-update!=
+# <<alist-update!>>
   CLOSED: [2010-02-02 Tue 05:53]
   - CLOSING NOTE [2010-02-02 Tue 05:53] \\
     on the basis of set-cdr! and alist-set!
@@ -126,8 +183,10 @@
 * DONE =alist-set!=
   CLOSED: [2010-02-01 Mon 08:25]
   - CLOSING NOTE [2010-02-01 Mon 08:26] \\
-    can we call this done? with the =alist-set!= \rightarrow
+    can we call this done? with the =alist-set!= $\rightarrow$
     =alist-prepend!= semantics; and as long as =list-copy= is acceptable, yes.
+  /see [[alist-update!]] for the canonical =alist-set!=./
+
   maybe the semantics of =alist-set!= can be equivalent to
   =set-car!= + =alist-cons=; leave updating to =alist-update!=? on the
   other hand, =vector-set!= semantics. hmm; let's follow srfi-69:
