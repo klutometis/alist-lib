@@ -4,7 +4,123 @@
   transparency in certain circumstances; orthogonal to the
   alist-backed hash-table question (employed by scheme48, i believe he
   said).
-* TODO =alist-update!=
+* DONE =alist-update!=
+  CLOSED: [2010-02-02 Tue 05:53]
+  - CLOSING NOTE [2010-02-02 Tue 05:53] \\
+    on the basis of set-cdr! and alist-set!
+  #+BEGIN_SRC scheme
+    (use srfi-1 test)
+    (let ((alist '((a . b) (c . d))))
+      (set-cdr! (assq 'a alist) 2)
+      (test
+       "set-cdr! on assq"
+       alist
+       '((a . 2) (c . d))))
+  #+END_SRC
+
+  if key doesn't exist, falls back on =alist-set!=
+  (i.e. =alist-prepend!=).
+
+  #+BEGIN_SRC org
+    ,- alist-update! 
+    ,  - case-lambda
+    ,    - alist key function
+    ,      - alist-update! alist key function error "key not found" key
+    ,    - alist key function thunk
+    ,      - alist-update! key function thunk eqv?
+    ,    - alist key function thunk =
+    ,      - let
+    ,        - pair assoc key alist =
+    ,          - if pair
+    ,            - set-cdr! pair function cdr pair
+    ,            - alist-set! alist key function thunk
+    
+    ,- alist-update!/default
+    ,  - case-lambda
+    ,    - alist key function default
+    ,      - alist-update!/default alist key function default eqv?
+    ,    - alist key function default =
+    ,      - alist-update! alist key function lambda default =
+  #+END_SRC
+
+  #+BEGIN_SRC scheme
+    (use srfi-1 test)
+    
+    (define (alist-prepend! alist key value)
+      (let ((cell (cons key value)))
+        (if (null? alist)
+            (list cell)
+            (begin
+              (set-cdr! alist (list-copy alist))
+              (set-car! alist cell)))))
+    
+    (define alist-set! alist-prepend!)
+    
+    (define alist-update!
+      (case-lambda
+       ((alist key function)
+        (alist-update! alist
+                       key
+                       function
+                       (lambda ()
+                         (error "Key not found -- ALIST-UPDATE!" key))))
+       ((alist key function thunk)
+        (alist-update! alist
+                       key
+                       function
+                       thunk
+                       eqv?))
+       ((alist key function thunk =)
+        (let ((pair (assoc key alist =)))
+          (if pair
+              (set-cdr! pair (function (cdr pair)))
+              (alist-set! alist key (function (thunk))))))))
+    
+    (define alist-update!/default
+      (case-lambda
+       ((alist key function default)
+        (alist-update!/default alist key function default eqv?))
+       ((alist key function default =)
+        (alist-update! alist key function (lambda () default)))))
+    
+    (let ((alist '((a . 1) (b . 2))))
+      (test-error
+       "alist-update! on non-extant key with no thunk"
+       (alist-update! alist 'c (lambda (datum) 1)))
+      (test
+       "alist-update! on non-extant key with thunk"
+       (begin
+         (alist-update! alist 'c (lambda (datum) 1) (lambda () 1))
+         alist)
+       '((c . 1) (a . 1) (b . 2)))
+      (test
+       "alist-update! on extant key"
+       '((c . 1) (a . 2) (b . 2))
+       (begin
+         (alist-update! alist 'a (lambda (datum) (+ datum 1)))
+         alist))
+      (test
+       "alist-update! on extant key with thunk and ="
+       '((c . 1) (a . 2) (b . 3))
+       (begin
+         (alist-update! alist
+                        'b
+                        (lambda (datum) (+ datum 1))
+                        (lambda () 3) eqv?)
+         alist))
+      (test
+       "alist-update!/default on non-extant key"
+       '((d . 2) (c . 1) (a . 2) (b . 3))
+       (begin
+         (alist-update!/default alist 'd (lambda (datum) (+ datum 1)) 1)
+         alist))
+      (test
+       "alist-update!/default on extant key with ="
+       '((d . 3) (c . 1) (a . 2) (b . 3))
+       (begin
+         (alist-update!/default alist 'd (lambda (datum) (+ datum 1)) 1 eqv?)
+         alist)))
+  #+END_SRC
 * DONE =alist-set!=
   CLOSED: [2010-02-01 Mon 08:25]
   - CLOSING NOTE [2010-02-01 Mon 08:26] \\
@@ -69,6 +185,14 @@
   #+END_SRC
 
   =alist-set!= merely prepends; =alist-update!= guarantees unique keys.
+
+  #+BEGIN_SRC scheme
+    (use srfi-1)
+    (let ((l '(1 2 3)))
+      (set-cdr! l (list-copy l))
+      (set-car! l 4)
+      l)
+  #+END_SRC
 * DONE =alist-ref{,/default}=
   CLOSED: [2010-01-25 Mon 07:02]
   - CLOSING NOTE [2010-01-25 Mon 07:02] \\
@@ -107,7 +231,8 @@
     (define alist-ref
       (case-lambda
        ((alist key)
-        (alist-ref alist key (lambda () (error "Key does not exist" key))))
+        (alist-ref alist key (lambda ()
+                               (error "Key not found -- ALIST-REF" key))))
        ((alist key thunk)
         (alist-ref alist key thunk eqv?))
        ((alist key thunk =)
