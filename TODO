@@ -51,7 +51,9 @@
         (if (null? alist)
             (list cell)
             (begin
-              (set-cdr! alist (list-copy alist))
+              ;; thanks, Stefan Ljungstrand; for the destructive prepense
+              ;; sans LIST-COPY
+              (set-cdr! alist (cons (car alist) (cdr alist)))
               (set-car! alist cell)))))
     
     (define alist-set! alist-prepend!)
