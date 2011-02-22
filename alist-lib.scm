@@ -3,7 +3,7 @@
  *
  (import scheme
          chicken)
- (use srfi-1)
+ (use srfi-1 debug matchable)
 
  (define (alist-values alist)
    (map cdr alist))
@@ -11,10 +11,17 @@
  (define (alist-keys alist)
    (map car alist))
  
+ ;; this applies to multiple alists, of course; but the result for one
+ ;; alist is anti-intuitive. switching to the simpler one (vide infra)
+ ;; for now.
+ #;
  (define (alist-map f . alists)
    (apply map (cons (lambda key-values (f (alist-keys key-values)
                                           (alist-values key-values)))
                     alists)))
+
+ (define (alist-map f alist)
+   (map (match-lambda ((key . values) (f key values))) alist))
 
  (define (alist-prepend! alist key value)
    (let ((cell (cons key value)))
@@ -74,7 +81,7 @@
     ((alist key default =)
      (alist-ref alist key (lambda () default) =))))
 
- (define alist-copy list-copy)
+ #;(define alist-copy list-copy)
 
  (define alist-size length)
 

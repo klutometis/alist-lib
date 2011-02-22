@@ -15,6 +15,18 @@
   with =(lambda (key value) ...)= semantics
 * TODO =alist-for-each=
   with =(lambda (key value) ...)= semantics
+* DONE module
+  CLOSED: [2011-02-21 Mon 23:32]
+  #+BEGIN_SRC scheme :tangle test-alist-lib.scm :shebang #!/usr/bin/env chicken-scheme
+    (include "alist-lib.scm")
+    (import alist-lib)
+    (use debug test)
+    (test '((1 2 3) (4 5 6))
+          (alist-map (lambda (key value) (cons key value))
+                     '((1 2 3)
+                       (4 5 6))))
+    
+  #+END_SRC
 * DONE =alist-set=
   CLOSED: [2011-02-21 Mon 23:17]
   just =alist-cons=
