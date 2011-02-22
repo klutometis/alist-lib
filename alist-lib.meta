@@ -1,0 +1,9 @@
+((egg "alist-lib.egg")
+ (license "GPL-3")
+ (category lang-ext)
+ (needs )
+ (test-depends test)
+ (author "Peter Danenberg")
+ (synopsis "SRFI-69-like library for alists")
+ (files "alist-lib.scm"
+        "alist-lib.setup"))

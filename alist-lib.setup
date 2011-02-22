@@ -1,0 +1,7 @@
+(include "setup-helper")
+
+(verify-extension-name "alist-lib")
+
+(setup-shared-extension-module
+ 'alist-lib
+ (extension-version 0.1))

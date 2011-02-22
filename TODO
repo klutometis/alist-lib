@@ -10,28 +10,30 @@
 * TODO =alist-delete=
 * TODO =alist-delete!=
 * TODO =alist-update=
-* TODO =alist-set=
-  just =alist-cons=
 * TODO =alist-set!= $\rightarrow$ =alist-cons!=?
-* CANCELED =alist-copy=
-  CLOSED: [2010-02-02 Tue 06:23]
-  just =list-copy=
-* CANCELED =alist-size=
-  CLOSED: [2010-02-02 Tue 06:23]
-  just =length=
-* TODO =alist-values=
+* TODO =alist-fold=
+  with =(lambda (key value) ...)= semantics
+* TODO =alist-for-each=
+  with =(lambda (key value) ...)= semantics
+* DONE =alist-set=
+  CLOSED: [2011-02-21 Mon 23:17]
+  just =alist-cons=
+* DONE =alist-values=
+  CLOSED: [2011-02-21 Mon 23:17]
   trivial map
   #+BEGIN_SRC scheme
     (define (alist-values alist)
       (map cdr alist))
   #+END_SRC
-* TODO =alist-keys=
+* DONE =alist-keys=
+  CLOSED: [2011-02-21 Mon 23:17]
   trivial map
   #+BEGIN_SRC scheme
     (define (alist-keys alist)
       (map car alist))
   #+END_SRC
-* TODO =alist-map=
+* DONE =alist-map=
+  CLOSED: [2011-02-21 Mon 23:12]
   with =(lambda (key value) ...)= semantics
   #+BEGIN_SRC scheme
     (use srfi-1 test debug)
@@ -56,10 +58,6 @@
                 '((e . f) (g . h))
                 '((i . j) (k . l))))
   #+END_SRC
-* TODO =alist-fold=
-  with =(lambda (key value) ...)= semantics
-* TODO =alist-for-each=
-  with =(lambda (key value) ...)= semantics
 * DONE =alist-update!=
 # <<alist-update!>>
   CLOSED: [2010-02-02 Tue 05:53]
@@ -470,3 +468,9 @@
   - =alist-{every,any}=
 
     we already have =every=, =any=.
+* CANCELED =alist-copy=
+  CLOSED: [2010-02-02 Tue 06:23]
+  just =list-copy=
+* CANCELED =alist-size=
+  CLOSED: [2010-02-02 Tue 06:23]
+  just =length=
