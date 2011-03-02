@@ -85,4 +85,5 @@
 
  (define alist-size length)
 
- (define alist-set alist-cons))
+ (define (alist-set alist key value)
+   (alist-cons key value alist)))
