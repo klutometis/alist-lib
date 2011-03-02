@@ -1,4 +1,22 @@
 # -*- mode: org; -*
+* TODO =alist-merge=
+  semantics of this are bizarre: how do we handle duplicate keys? do
+  we replace the key, or merely append? do we allow the user to
+  specify the collision-resolution?
+
+  also, notice that the srfi-69 semantics are destructive (i.e. there
+  is no =alist-merge= for hash-tables).
+
+  why doesn't srfi-69 have to deal with collision?
+
+  #+BEGIN_SRC scheme :tangle test-alist-merge.scm :shebang #!/usr/bin/env chicken-scheme
+    (use srfi-1)
+    
+    ;;; fuck this; we'll do it later. it's not actually what we need right
+    ;;; now.
+    (define (alist-merge mergor mergendum)
+      )
+  #+END_SRC
 * TODO issues
   riastradh's claim about alist-backed hash-tables: we'd rather have
   transparency in certain circumstances; orthogonal to the
@@ -11,10 +29,33 @@
 * TODO =alist-delete!=
 * TODO =alist-update=
 * TODO =alist-set!= $\rightarrow$ =alist-cons!=?
-* TODO =alist-fold=
-  with =(lambda (key value) ...)= semantics
 * TODO =alist-for-each=
   with =(lambda (key value) ...)= semantics
+* DONE =alist-fold=
+  CLOSED: [2011-02-21 Mon 23:40]
+  with =(lambda (key value) ...)= semantics
+  #+BEGIN_SRC scheme :tangle test-alist-fold.scm :shebang #!/usr/bin/env chicken-scheme
+    (use matchable srfi-1 test debug)
+    
+    (define (alist-fold alist f init)
+      (fold (lambda (association accumulatum)
+              (match association
+                ((key . value)
+                 (f key value accumulatum))))
+            init
+            alist))
+    
+    (test
+     14
+     (alist-fold
+      '((1 2 3) (3 4 5))
+      (lambda (key value accumulatum)
+        (+ (apply + value) accumulatum))
+      0))
+  #+END_SRC
+
+  multi-alist fold is tricky, because the keys might be different; i
+  think what we want is an =alist-merge= followed by =alist-fold=.
 * DONE module
   CLOSED: [2011-02-21 Mon 23:32]
   #+BEGIN_SRC scheme :tangle test-alist-lib.scm :shebang #!/usr/bin/env chicken-scheme

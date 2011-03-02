@@ -85,4 +85,12 @@
 
  (define alist-size length)
 
- (define alist-set alist-cons))
+ (define alist-set alist-cons)
+
+ (define (alist-fold alist f init)
+  (fold (lambda (association accumulatum)
+          (match association
+            ((key . value)
+             (f key value accumulatum))))
+        init
+        alist)))
