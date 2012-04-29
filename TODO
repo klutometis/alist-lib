@@ -1,4 +1,5 @@
 # -*- mode: org; -*
+* TODO We need to pivot on =(alist-ref alist key = default)=, unfortunately.
 * TODO issues
   riastradh's claim about alist-backed hash-tables: we'd rather have
   transparency in certain circumstances; orthogonal to the
