@@ -1,4 +1,5 @@
 # -*- mode: org; -*
+* TODO We need to pivot on =(alist-ref alist key = default)=, unfortunately.
 * TODO =alist-merge=
   semantics of this are bizarre: how do we handle duplicate keys? do
   we replace the key, or merely append? do we allow the user to
