@@ -1,6 +1,7 @@
 # -*- mode: org; -*
 * TODO Oh, shit: we're fooled by =#f=!
 * TODO We need to pivot on =(alist-ref alist key = default)=, unfortunately.
+  This is, incidentally, what [[http://wiki.call-cc.org/man/4/Unit%2520data-structures#alist-ref][Chicken uses]].
 * TODO =alist-merge=
   semantics of this are bizarre: how do we handle duplicate keys? do
   we replace the key, or merely append? do we allow the user to
