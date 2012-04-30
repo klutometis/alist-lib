@@ -86,7 +86,8 @@
      (alist-ref alist key thunk eqv?))
     ((alist key thunk =)
      (let ((value (assoc key alist =)))
-       (or (and value (cdr value))
+       (if value
+           (cdr value)
            (thunk))))))
  
  (define alist-ref/default
