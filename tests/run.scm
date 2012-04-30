@@ -66,3 +66,8 @@
    "alist-set!"
    alist
    '((7 . 8) (1 . 2) (3 . 4) (5 . 6))))
+
+(test
+ "Test that #f-values are reported."
+ #f
+ (alist-ref '((a . #f)) 'a))
