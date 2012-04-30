@@ -72,6 +72,11 @@
     ((alist key function default =)
      (alist-update! alist key function (lambda () default)))))
 
+ ;; Should we have a no-value module?
+ (define no-value (cons #f #f))
+
+ (define (no-value? value) (eq? value no-value))
+
  (define alist-ref
    (case-lambda
     ((alist key)
