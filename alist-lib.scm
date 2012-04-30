@@ -101,12 +101,12 @@
  (define alist-size length)
 
  (define (alist-fold alist f init)
-  (fold (lambda (association accumulatum)
-          (match association
-            ((key . value)
-             (f key value accumulatum))))
-        init
-        alist))
+   (fold (lambda (association accumulatum)
+           (match association
+             ((key . value)
+              (f key value accumulatum))))
+         init
+         alist))
 
  (define (alist-set alist key value)
    (alist-cons key value alist)))
