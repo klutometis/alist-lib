@@ -27,7 +27,7 @@
  #;
  (define (alist-map f . alists)
    (apply map (cons (lambda key-values (f (alist-keys key-values)
-                                          (alist-values key-values)))
+                                     (alist-values key-values)))
                     alists)))
 
  (define (alist-map f alist)
