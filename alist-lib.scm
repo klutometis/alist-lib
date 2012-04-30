@@ -72,11 +72,6 @@
     ((alist key function default =)
      (alist-update! alist key function (lambda () default)))))
 
- ;; Should we have a no-value module?
- (define no-value (cons #f #f))
-
- (define (no-value? value) (eq? value no-value))
-
  (define alist-ref
    (case-lambda
     ((alist key)
@@ -101,12 +96,12 @@
  (define alist-size length)
 
  (define (alist-fold alist f init)
-   (fold (lambda (association accumulatum)
-           (match association
-             ((key . value)
-              (f key value accumulatum))))
-         init
-         alist))
+  (fold (lambda (association accumulatum)
+          (match association
+            ((key . value)
+             (f key value accumulatum))))
+        init
+        alist))
 
  (define (alist-set alist key value)
    (alist-cons key value alist)))
