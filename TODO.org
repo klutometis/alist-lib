@@ -1,6 +1,11 @@
 # -*- mode: org; -*
-* TODO Oh, shit: we're fooled by =#f=!
+* DONE Oh, shit: we're fooled by =#f=!
+  CLOSED: [2012-05-01 Tue 15:18]
 * TODO We need to pivot on =(alist-ref alist key = default)=, unfortunately.
+  Ah, the reason I did it =(... default =)= was for the =.../default=
+  functions (=alist-update/default=, =alist-ref/default=), &c.
+
+  Hmm.
 * TODO =alist-merge=
   semantics of this are bizarre: how do we handle duplicate keys? do
   we replace the key, or merely append? do we allow the user to
