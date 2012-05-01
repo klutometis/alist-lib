@@ -1,6 +1,16 @@
 (module
  alist-lib
- *
+ (alist-values
+  alist-keys
+  alist-map
+  alist-set!
+  alist-update!
+  alist-update!/default
+  alist-ref
+  alist-ref/default
+  alist-size
+  alist-fold
+  alist-set)
  (import scheme
          chicken)
  (use srfi-1 debug matchable)
@@ -17,7 +27,7 @@
  #;
  (define (alist-map f . alists)
    (apply map (cons (lambda key-values (f (alist-keys key-values)
-                                          (alist-values key-values)))
+                                     (alist-values key-values)))
                     alists)))
 
  (define (alist-map f alist)
@@ -62,6 +72,11 @@
     ((alist key function default =)
      (alist-update! alist key function (lambda () default)))))
 
+ ;; Should we have a no-value module?
+ (define no-value (cons #f #f))
+
+ (define (no-value? value) (eq? value no-value))
+
  (define alist-ref
    (case-lambda
     ((alist key)
@@ -71,7 +86,8 @@
      (alist-ref alist key thunk eqv?))
     ((alist key thunk =)
      (let ((value (assoc key alist =)))
-       (or (and value (cdr value))
+       (if value
+           (cdr value)
            (thunk))))))
  
  (define alist-ref/default
@@ -86,12 +102,12 @@
  (define alist-size length)
 
  (define (alist-fold alist f init)
-  (fold (lambda (association accumulatum)
-          (match association
-            ((key . value)
-             (f key value accumulatum))))
-        init
-        alist))
+   (fold (lambda (association accumulatum)
+           (match association
+             ((key . value)
+              (f key value accumulatum))))
+         init
+         alist))
 
  (define (alist-set alist key value)
    (alist-cons key value alist)))
