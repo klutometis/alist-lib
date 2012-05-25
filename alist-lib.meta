@@ -1,7 +1,9 @@
 ((egg "alist-lib.egg")
  (license "GPL-3")
  (category data)
- (needs debug matchable)
+ (needs debug
+        setup-helper
+        matchable)
  (test-depends test)
  (author "Peter Danenberg")
  (synopsis "SRFI-69-like library for alists")
