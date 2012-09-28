@@ -1,11 +1,9 @@
-((egg "alist-lib.egg")
- (license "GPL-3")
- (category data)
- (needs debug
-        matchable
-        setup-helper)
- (test-depends test)
+((synopsis "SRFI-69-like library for alists")
  (author "Peter Danenberg")
- (synopsis "SRFI-69-like library for alists")
- (files "alist-lib.scm"
-        "alist-lib.setup"))
+ (category data)
+ (license "BSD")
+ (depends debug
+          matchable
+          setup-helper)
+ (test-depends test)
+ (foreign-depends))

@@ -4,4 +4,4 @@
 
 (setup-shared-extension-module
  'alist-lib
- (extension-version 0.1))
+ (extension-version "0.2.1"))
