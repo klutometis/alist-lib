@@ -4,7 +4,7 @@
 
 (setup-shared-extension-module
  'alist-lib
- (extension-version "0.2.2")
+ (extension-version "0.2.3")
  compile-options: '(-X cock))
 
 (run (cock -o alist-lib.wiki alist-lib-core.scm))
