@@ -4,7 +4,7 @@
  14
  (alist-fold
   '((1 2 3) (3 4 5))
-  (lambda (key value accumulatum)
+  (lambda (key accumulatum value)
     (+ (apply + value) accumulatum))
   0))
 
