@@ -2,8 +2,7 @@
  (author "Peter Danenberg")
  (category data)
  (license "BSD")
- (depends debug
-          matchable
+ (depends matchable
           setup-helper)
  (test-depends test)
  (foreign-depends))

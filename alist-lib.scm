@@ -13,7 +13,7 @@
   alist-set)
  (import scheme
          chicken)
- (use srfi-1 debug matchable)
+ (use srfi-1 matchable)
 
  (define (alist-values alist)
    (map cdr alist))
