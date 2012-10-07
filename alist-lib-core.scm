@@ -1,3 +1,9 @@
+@(title "alist-lib")
+@(description "Useful functions for alists")
+@(author "Peter Danenberg")
+@(username "klutometis")
+@(email "pcd@roxygen.org")
+
 (define (alist-values alist)
   @("Extract the associations from an alist."
     (alist "The alist from which to extract")
