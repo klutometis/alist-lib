@@ -3,6 +3,7 @@
  (category data)
  (license "BSD")
  (depends cock
+          debug
           matchable
           setup-helper)
  (test-depends test)
