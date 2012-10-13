@@ -71,3 +71,5 @@
  "Test that #f-values are reported."
  #f
  (alist-ref '((a . #f)) 'a))
+
+(test-exit)
