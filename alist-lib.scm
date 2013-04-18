@@ -4,6 +4,7 @@
   alist-keys
   alist-map
   alist-set!
+  alist-prepend!
   alist-update!
   alist-update!/default
   alist-ref
