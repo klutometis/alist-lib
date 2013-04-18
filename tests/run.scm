@@ -67,6 +67,13 @@
    alist
    '((7 . 8) (1 . 2) (3 . 4) (5 . 6))))
 
+(let ((alist '()))
+  (alist-set! alist 1 2)
+  (test
+   "alist-set! on empty list"
+   alist
+   '((1 . 2))))
+
 (test
  "Test that #f-values are reported."
  #f
