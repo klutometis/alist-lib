@@ -17,5 +17,5 @@
  (use debug
       matchable
       srfi-1)
-
+ (import-for-syntax matchable)
  (include "alist-lib-core.scm"))
