@@ -33,20 +33,29 @@
 
 (define (alist-prepend! alist key value)
   (let ((cell (cons key value)))
-    (if (null? alist)
-        (list cell)
-        (begin
-          ;; thanks, Stefan Ljungstrand; for the destructive prepense
-          ;; sans LIST-COPY
-          (set-cdr! alist (cons (car alist) (cdr alist)))
-          (set-car! alist cell)))))
+    (unless (null? alist)
+      ;; thanks, Stefan Ljungstrand; for the destructive prepense
+      ;; sans LIST-COPY
+      (set-cdr! alist (cons (car alist) (cdr alist)))
+      (set-car! alist cell))))
 
-(define alist-set!
+(define-syntax alist-set!
   @("Destructively set a key-value association."
     (alist "The alist in which to set")
     (key "The key to set")
     (value "The value to associate with the key"))
-  alist-prepend!)
+  (lambda (expression rename compare)
+    (match expression
+      ((_ variable key value)
+       (let ((%if (rename 'if))
+             (%null?  (rename 'null?))
+             (%set! (rename 'set!))
+             (%list (rename 'list))
+             (%cons (rename 'cons))
+             (%alist-prepend! (rename 'alist-prepend!)))
+         `(,%if (,%null? ,variable)
+                (,%set! ,variable (,%list (,%cons ,key ,value)))
+                (,%alist-prepend! ,variable ,key ,value)))))))
 
 (define alist-update!
   @("On analogy with hash-table-update!, descructively update an
