@@ -1,6 +1,6 @@
 == alist-lib
 
-Useful functions for alists
+SRFI-69-like library for alists
 [[toc:]]
 === {{alist-values}}
 <procedure>(alist-values alist) → list</procedure>
@@ -151,7 +151,8 @@ Non-destructively associate a key and value in the alist.
 ==== Author
 
 [[/users/klutometis|Peter Danenberg]]
-
+==== Repository
+[[https://github.com/klutometis/alist-lib]]
 ==== License
 BSD
 ==== Dependencies
