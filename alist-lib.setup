@@ -1,13 +1,10 @@
-(include "setup-helper")
+(use cock setup-helper-mod)
 
 (verify-extension-name "alist-lib")
 
 (setup-shared-extension-module
  'alist-lib
- (extension-version "0.2.7")
+ (extension-version "0.2.8")
  compile-options: '(-X cock))
 
-(handle-exceptions exn
-  (warning "Not generating documentation")
-  (include "setup-helper-cock")
-  (run-cock -o alist-lib.wiki alist-lib-core.scm))
+(run-cock -o alist-lib.wiki alist-lib-core.scm)
