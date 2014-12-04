@@ -14,8 +14,7 @@
   alist-set)
  (import scheme
          chicken)
- (use debug
-      matchable
+ (use matchable
       srfi-1)
  (import-for-syntax matchable)
  (include "alist-lib-core.scm"))
