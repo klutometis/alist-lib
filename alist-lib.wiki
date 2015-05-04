@@ -5,29 +5,29 @@ SRFI-69-like library for alists
 === {{alist-values}}
 <procedure>(alist-values alist) → list</procedure>
 Extract the associations from an alist.
-; alist : The alist from which to extract
+; {{alist}} : The alist from which to extract
 <enscript highlight="scheme">(define (alist-values alist) (map cdr alist))
 </enscript>
 === {{alist-keys}}
 <procedure>(alist-keys alist) → list</procedure>
 Extract the keys from an alist.
-; alist : The alist from which to extract
+; {{alist}} : The alist from which to extract
 <enscript highlight="scheme">(define (alist-keys alist) (map car alist))
 </enscript>
 === {{alist-map}}
 <procedure>(alist-map f alist) → list</procedure>
 Map across an alist; {{f}} takes two parameters: {{key}} and {{values}}.
-; f : The function to apply to each key-value association
-; alist : The alist to apply to
+; {{f}} : The function to apply to each key-value association
+; {{alist}} : The alist to apply to
 <enscript highlight="scheme">(define (alist-map f alist)
   (map (match-lambda ((key . values) (f key values))) alist))
 </enscript>
 === {{alist-set!}}
 <syntax>(alist-set! alist key value) → unspecified</syntax>
 Destructively set a key-value association.
-; alist : The alist in which to set
-; key : The key to set
-; value : The value to associate with the key
+; {{alist}} : The alist in which to set
+; {{key}} : The key to set
+; {{value}} : The value to associate with the key
 <enscript highlight="scheme">(define-syntax
   alist-set!
   (lambda (expression rename compare)
@@ -50,11 +50,11 @@ Destructively set a key-value association.
 <procedure>(alist-update! alist key function thunk =) → unspecified</procedure>
 On analogy with hash-table-update!, descructively update an
 association.
-; alist : The alist to update
-; key : The key associated with the update
-; f : A monadic function taking the preëxisting key
-; thunk : The thunk to apply if no association exists
-; = : The equality predicate for keys
+; {{alist}} : The alist to update
+; {{key}} : The key associated with the update
+; {{f}} : A monadic function taking the preëxisting key
+; {{thunk}} : The thunk to apply if no association exists
+; {{=}} : The equality predicate for keys
 <enscript highlight="scheme">(define alist-update!
   (case-lambda
     ((alist key function)
@@ -75,11 +75,11 @@ association.
 <procedure>(alist-update!/default alist key function default =) → unspecified</procedure>
 On analogy with hash-table-update!, descructively update an
 association.
-; alist : The alist to update
-; key : The key associated with the update
-; f : A monadic function taking the preëxisting key
-; default : The default value if no association exists
-; = : The equality predicate for keys
+; {{alist}} : The alist to update
+; {{key}} : The key associated with the update
+; {{f}} : A monadic function taking the preëxisting key
+; {{default}} : The default value if no association exists
+; {{=}} : The equality predicate for keys
 <enscript highlight="scheme">(define alist-update!/default
   (case-lambda
     ((alist key function default)
@@ -92,10 +92,10 @@ association.
 <procedure>(alist-ref alist key thunk) → object</procedure>
 <procedure>(alist-ref alist key thunk =) → object</procedure>
 Return a value associated with its key or apply {{thunk}}.
-; alist : The alist to search in
-; key : The key whose value to return
-; thunk : The thunk to apply when association doesn't exist (default is to err)
-; = : The equality predicate to apply to keys
+; {{alist}} : The alist to search in
+; {{key}} : The key whose value to return
+; {{thunk}} : The thunk to apply when association doesn't exist (default is to err)
+; {{=}} : The equality predicate to apply to keys
 <enscript highlight="scheme">(define alist-ref
   (case-lambda
     ((alist key)
@@ -111,10 +111,10 @@ Return a value associated with its key or apply {{thunk}}.
 <procedure>(alist-ref/default alist key default) → object</procedure>
 <procedure>(alist-ref/default alist key default =) → object</procedure>
 Return a value associated with its key or {{default}}.
-; alist : The alist to search in
-; key : The key whose value to return
-; default : The default to return when association doesn't exist
-; = : The equality predicate to apply to keys
+; {{alist}} : The alist to search in
+; {{key}} : The key whose value to return
+; {{default}} : The default to return when association doesn't exist
+; {{=}} : The equality predicate to apply to keys
 <enscript highlight="scheme">(define alist-ref/default
   (case-lambda
     ((alist key default) (alist-ref alist key (lambda () default)))
@@ -123,15 +123,15 @@ Return a value associated with its key or {{default}}.
 === {{alist-size}}
 <procedure>(alist-size alist) → integer</procedure>
 Calculate size of alist.
-; alist : The alist whose size to calculate
+; {{alist}} : The alist whose size to calculate
 <enscript highlight="scheme">(define alist-size length)
 </enscript>
 === {{alist-fold}}
 <procedure>(alist-fold alist f init) → object</procedure>
 Fold an alist; whose {{f}} takes key, accumulatum, value.
-; alist : The alist to fold
-; f : The function to apply to key, accumulatum, value
-; init : The seed of the fold
+; {{alist}} : The alist to fold
+; {{f}} : The function to apply to key, accumulatum, value
+; {{init}} : The seed of the fold
 <enscript highlight="scheme">(define (alist-fold alist f init)
   (fold (lambda (association accumulatum)
           (match association ((key . value) (f key accumulatum value))))
@@ -141,9 +141,9 @@ Fold an alist; whose {{f}} takes key, accumulatum, value.
 === {{alist-set}}
 <procedure>(alist-set alist key value) → alist</procedure>
 Non-destructively associate a key and value in the alist.
-; alist : Alist in which to set
-; key : The key to set
-; value : The value to associate with key
+; {{alist}} : Alist in which to set
+; {{key}} : The key to set
+; {{value}} : The value to associate with key
 <enscript highlight="scheme">(define (alist-set alist key value) (alist-cons key value alist))
 </enscript>
 === About this egg
@@ -156,8 +156,7 @@ Non-destructively associate a key and value in the alist.
 ==== License
 BSD
 ==== Dependencies
-* [[cock]]
-* [[debug]]
+* [[(hahn 0.9.3)]]
 * [[matchable]]
 * [[setup-helper]]
 
@@ -174,6 +173,8 @@ BSD
 ; [[https://github.com/klutometis/alist-lib/releases/tag/0.2.5|0.2.5]] : With a note about cock-utils
 ; [[https://github.com/klutometis/alist-lib/releases/tag/0.2.6|0.2.6]] : Add test-exit.
 ; [[https://github.com/klutometis/alist-lib/releases/tag/0.2.7|0.2.7]] : alist-set! should work on empty lists.
+; [[https://github.com/klutometis/alist-lib/releases/tag/0.2.8|0.2.8]] : Remove the dependency on setup-helper-cock.
+; [[https://github.com/klutometis/alist-lib/releases/tag/0.2.9|0.2.9]] : Remove the dependency on debug.
 ==== Colophon
 
-Documented by [[/egg/cock|cock]].
+Documented by [[/egg/hahn|hahn]].
