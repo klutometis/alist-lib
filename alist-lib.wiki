@@ -156,7 +156,7 @@ Non-destructively associate a key and value in the alist.
 ==== License
 BSD
 ==== Dependencies
-* [[(hahn 0.9.3)]]
+* [[hahn]]
 * [[matchable]]
 * [[setup-helper]]
 
@@ -175,6 +175,7 @@ BSD
 ; [[https://github.com/klutometis/alist-lib/releases/tag/0.2.7|0.2.7]] : alist-set! should work on empty lists.
 ; [[https://github.com/klutometis/alist-lib/releases/tag/0.2.8|0.2.8]] : Remove the dependency on setup-helper-cock.
 ; [[https://github.com/klutometis/alist-lib/releases/tag/0.2.9|0.2.9]] : Remove the dependency on debug.
+; [[https://github.com/klutometis/alist-lib/releases/tag/0.2.10|0.2.10]] : Use hahn.
 ==== Colophon
 
 Documented by [[/egg/hahn|hahn]].
