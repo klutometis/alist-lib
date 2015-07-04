@@ -4,7 +4,7 @@
 
 (setup-shared-extension-module
  'alist-lib
- (extension-version "0.2.10")
+ (extension-version "0.2.11")
  compile-options: '(-X hahn))
 
 (run-hahn -o alist-lib.wiki alist-lib-core.scm)
