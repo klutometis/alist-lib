@@ -139,15 +139,15 @@ is to err)")
   length)
 
 (define (alist-fold alist f init)
-  @("Fold an alist; whose {{f}} takes key, accumulatum, value."
+  @("Fold an alist; whose {{f}} takes key, value, accumulatum."
     (alist "The alist to fold")
-    (f "The function to apply to key, accumulatum, value")
+    (f "The function to apply to key, value, accumulatum")
     (init "The seed of the fold")
     (@to "object"))
   (fold (lambda (association accumulatum)
           (match association
             ((key . value)
-             (f key accumulatum value))))
+             (f key value accumulatum))))
         init
         alist))
 

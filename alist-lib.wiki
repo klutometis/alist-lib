@@ -128,13 +128,13 @@ Calculate size of alist.
 </enscript>
 === {{alist-fold}}
 <procedure>(alist-fold alist f init) → object</procedure>
-Fold an alist; whose {{f}} takes key, accumulatum, value.
+Fold an alist; whose {{f}} takes key, value, accumulatum.
 ; {{alist}} : The alist to fold
-; {{f}} : The function to apply to key, accumulatum, value
+; {{f}} : The function to apply to key, value, accumulatum
 ; {{init}} : The seed of the fold
 <enscript highlight="scheme">(define (alist-fold alist f init)
   (fold (lambda (association accumulatum)
-          (match association ((key . value) (f key accumulatum value))))
+          (match association ((key . value) (f key value accumulatum))))
         init
         alist))
 </enscript>
