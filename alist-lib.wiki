@@ -176,6 +176,7 @@ BSD
 ; [[https://github.com/klutometis/alist-lib/releases/tag/0.2.8|0.2.8]] : Remove the dependency on setup-helper-cock.
 ; [[https://github.com/klutometis/alist-lib/releases/tag/0.2.9|0.2.9]] : Remove the dependency on debug.
 ; [[https://github.com/klutometis/alist-lib/releases/tag/0.2.10|0.2.10]] : Use hahn.
+; [[https://github.com/klutometis/alist-lib/releases/tag/0.2.11|0.2.11]] : Modify alist-fold to use key, value, accumulatum.
 ==== Colophon
 
 Documented by [[/egg/hahn|hahn]].
