@@ -1,4 +1,6 @@
-(use alist-lib test)
+(cond-expand
+  (chicken-4 (use alist-lib test))
+  (chicken-5 (import alist-lib test)))
 
 (test
  14

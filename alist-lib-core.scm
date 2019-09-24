@@ -38,7 +38,8 @@
     (alist "The alist in which to set")
     (key "The key to set")
     (value "The value to associate with the key"))
-  (lambda (expression rename compare)
+  (er-macro-transformer
+   (lambda (expression rename compare)
     (match expression
       ((_ variable key value)
        (let ((%if (rename 'if))
@@ -49,7 +50,7 @@
              (%alist-prepend! (rename 'alist-prepend!)))
          `(,%if (,%null? ,variable)
                 (,%set! ,variable (,%list (,%cons ,key ,value)))
-                (,%alist-prepend! ,variable ,key ,value)))))))
+                (,%alist-prepend! ,variable ,key ,value))))))))
 
 (define alist-update!
   @("On analogy with hash-table-update!, descructively update an
