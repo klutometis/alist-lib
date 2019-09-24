@@ -1,0 +1,8 @@
+((synopsis "SRFI-69-like library for alists")
+ (author "Peter Danenberg")
+ (category data)
+ (license "BSD")
+ (dependencies (hahn "0.9.3") matchable)
+ (test-dependencies test)
+ (component-options (csc-options "-X" "hahn"))
+ (components (extension alist-lib)))
