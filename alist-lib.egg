@@ -2,7 +2,7 @@
  (author "Peter Danenberg")
  (category data)
  (license "BSD")
- (dependencies (hahn "0.9.3") matchable)
+ (dependencies (hahn "0.9.3") matchable srfi-1)
  (test-dependencies test)
  (component-options (csc-options "-X" "hahn"))
  (components (extension alist-lib)))
